@@ -7,6 +7,8 @@ fontfamily: times
 De rien à un filtre FM pour SWL
 ===============================
 
+[![Upload to - AISLER](https://img.shields.io/badge/Upload_to_-AISLER-ff8000)](https://aisler.net/p/new?url=https://raw.githubusercontent.com/loic-fejoz/learning-kicad-fm-swl-filter/main/fm-filter.kicad_pcb&ref=github)
+
 # Objectifs
 
 > "Dans un voyage ce n'est pas la destination qui compte mais toujours le chemin parcouru, et les détours surtout."  
@@ -18,6 +20,10 @@ Vous avez acheté une clef SDR ? Moi aussi. Vous avez commencé à faire un peu 
 Mais ces circuits sont déjà d'un niveau supérieur. J'ai donc voulu expérimenter la création d'une carte plus simple depuis sa conception, son analyse, jusqu'à son expérimentation. Or les ondes de station FM se superposent souvent au signal que l'on veut écouter diminuant par la même la dynamique que l'on perçoit. Dés lors le voyage dans la création d'un **filtre passe-haut** peut commencer ...avec ses détours!
 
 NB&nbsp;: vous l'aurez compris, je suis un [n00b](https://fr.wikipedia.org/wiki/Newbie).
+
+Autres projets similaires dans l'esprit :
+
+* [Filtre coupe-bande FM 88 à 108MHz, de la conception à la réalisation](https://www.f4iha.fr/2021/10/16/filtre-coupe-bande-fm-88-a-108mhz-de-la-conception-a-la-realisation/)
 
 # Conception
 
@@ -141,11 +147,44 @@ Il nous faut maintenant passer à la réalisation...
 
 ## à la mano
 
-à venir
+C'est parti pour une première réalisation "à la main" du circuit. Comme on peut le voir sur la photo suivante je n'ai pas eu le courage de faire autant de vias que prévu. 😬
 
-## commande en ligne
+![](20230114_173755.jpg)
 
-à venir
+Et maintenant place aux mesures ! La pince crocodile bleue sert de mise à la masse du plan de masse en dessous pour ne pas être perturbé par un effet capacitif. Plutôt concluant et correct, non ?
+
+![](2023-01-15-113623_1920x1080_scrot.png)
+
+
+## 1ére commande en ligne
+
+![](20230821_201127.jpg)
+
+Même principe mais avec un PCB fabriqué par [JLCPCB](https://jlcpcb.com/).
+Encore une fois les inductances ont été réalisées à la main autour d'un forêt de ⌀4mm. Mais voyez-vous le problème venir ? Sur cette réalisation, il n'y a pas de séparation de découplage des 2 inductances. Du coup, le filtre ne fonctionne pas du tout comme prévu évidement. L'effet est beaucoup plus notable que ce à quoi je m'attendais.
+
+Deux solutions possibles :
+
+1. on remet une séparation.
+2. on place les inductances à 90° pour réduire l'effet.
+
+Pour un premier PCB, c'est à la fois simple mais instructif ! Essayons de faire mieux maintenant.
+
+## 2ème commande en ligne
+
+Outre le problème de couplage des inductances, l'empreinte du connecteur SMA n'était pas le bon car trop espacée. Enfin, il n'y avait rien de prévu pour la fixation de la carte en elle-même.
+
+Donc après de nombreuses recherches, dans l'éditeur de PCB, on peut rajouter des empreintes d'un _mounting hole_ pour le support de la carte. La difficulté réside dans l'étape fastidieuse de changer le mode de _connexion des pads_ en _solide_. A l'inverse, les trous de support de la cloison sont aussi des _Pin_D1.0mm_L10.0mm_LooseFit_ mais avec un mode de _connexion des pads_ de type _frein thermique_ afin de faciliter le soudage.
+
+![](fm-swl-filter-3d-v2.jpg)
+
+TODO: commander et mesurer!
+
+## La suite
+
+Une de mes prochaines lectures sera [CEM - Parasites et perturbations des électroniques, Alain Charoy](https://www.dunod.com/sciences-techniques/cem-parasites-et-perturbations-electroniques-tome-1) alors qui sait ce que je vais découvrir... Peut-être un meilleur placement des vias ?
+
+[![CEM - Parasites et perturbations des électroniques, Alain Charoy](https://www.dunod.com/sites/default/files/styles/principal_desktop/public/thumbnails/image/9782100501519-T.jpg)](https://www.dunod.com/sciences-techniques/cem-parasites-et-perturbations-electroniques-tome-1)
 
 # Remerciements
 
